@@ -7,6 +7,15 @@ A minimal todo app for learning the MERN stack:
 - **R**eact — frontend library
 - **N**ode.js — runtime
 
+## Where to Start Reading
+
+New to the stack? Read in this order:
+
+1. [TUTORIAL.md](TUTORIAL.md) — line-by-line walkthrough of the whole app
+2. [backend/README.md](backend/README.md) — what each backend file/folder does and the life of one request
+3. [frontend/README.md](frontend/README.md) — how React + Vite fit together (and Vite vs Create React App)
+4. [INTERVIEW-PREP.md](INTERVIEW-PREP.md) — practice answers for the questions interviewers ask about an app like this
+
 ## Project Structure
 
 ```
