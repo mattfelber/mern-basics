@@ -7,6 +7,10 @@ const API_URL = 'http://localhost:5000/api/todos';
 
 function App() {
   // State to hold the list of todos and the input field value.
+  // useState returns a pair [value, setterFunction] — the square brackets
+  // are "array destructuring", just a shortcut for grabbing both at once.
+  // Calling the setter (setTodos / setText) updates the value AND tells
+  // React to re-render this component.
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
 
@@ -41,6 +45,9 @@ function App() {
       if (!response.ok) throw new Error('Failed to add todo');
       const newTodo = await response.json();
       // Add the new todo to the top of the list.
+      // ...todos is the "spread" operator: it copies the existing items into
+      // a NEW array. We never modify state directly — we replace it, so
+      // React knows something changed and re-renders.
       setTodos([newTodo, ...todos]);
       setText(''); // Clear the input
     } catch (err) {
@@ -57,6 +64,9 @@ function App() {
       if (!response.ok) throw new Error('Failed to update todo');
       const updated = await response.json();
       // Replace the old todo with the updated one in state.
+      // .map() builds a new array: for each todo, keep it as-is unless its
+      // _id matches — in that case swap in the updated version.
+      // (condition ? a : b) is the ternary operator: "if condition then a else b".
       setTodos(todos.map((todo) => (todo._id === id ? updated : todo)));
     } catch (err) {
       console.error(err);
@@ -71,6 +81,8 @@ function App() {
       });
       if (!response.ok) throw new Error('Failed to delete todo');
       // Remove the deleted todo from state without refetching everything.
+      // .filter() builds a new array containing only the todos whose _id
+      // does NOT match — i.e. everything except the one we deleted.
       setTodos(todos.filter((todo) => todo._id !== id));
     } catch (err) {
       console.error(err);
@@ -92,7 +104,10 @@ function App() {
         <button type="submit">Add</button>
       </form>
 
-      {/* List of todos */}
+      {/* List of todos.
+          In JSX, curly braces {} switch from HTML back into JavaScript.
+          We .map() each todo object into an <li> element.
+          key={todo._id} lets React track each item between re-renders. */}
       <ul className="todo-list">
         {todos.map((todo) => (
           <li key={todo._id} className={todo.completed ? 'completed' : ''}>
