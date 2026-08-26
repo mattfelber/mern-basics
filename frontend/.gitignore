@@ -1,0 +1,13 @@
+# Dependencies installed by npm.
+/node_modules
+
+# Build output.
+/dist
+
+# Local environment files.
+.env
+.env.local
+
+# Editor/OS files.
+.vscode
+.DS_Store
