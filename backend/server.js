@@ -30,7 +30,13 @@ mongoose.connect(process.env.MONGO_URI)
   });
 
 // Register routes.
-// Any request starting with /api/todos will be handled by routes/todos.js.
+//
+// server.js only mounts the todo router. It does not need to know which
+// controller handles POST, GET, PATCH, or DELETE. That resource-specific
+// mapping belongs to routes/todos.js.
+//
+// Requests beginning with /api/todos enter todoRoutes. The router then checks
+// the remaining path and HTTP method to choose the correct callback.
 app.use('/api/todos', todoRoutes);
 
 // Simple health-check route so you can verify the server is alive.
