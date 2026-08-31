@@ -69,3 +69,20 @@ cp .env.example .env   # then edit MONGO_URI if needed
 npm install
 npm run dev            # nodemon restarts the server when you save a file
 ```
+
+## Controllers
+
+`controllers/todoController.js` holds the handler functions themselves, so
+`routes/todos.js` is left as a plain map of "method + path -> function":
+
+```
+routes/todos.js                router.post('/', createTodo)  # which function runs
+controllers/todoController.js  createTodo(req, res)          # what it actually does
+models/Todo.js                 the schema it saves through
+```
+
+Only **CREATE** has been extracted so far; `GET`, `PATCH`, and `DELETE` are
+still written inline in the router on purpose, so you can compare both styles
+side by side in the same file.
+
+Full walkthrough, line by line: [`CREATE-CONTROLLER-TUTORIAL.md`](./CREATE-CONTROLLER-TUTORIAL.md).
