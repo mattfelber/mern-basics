@@ -5,6 +5,17 @@
 const express = require('express');
 const Todo = require('../models/Todo');
 
+// Import only the CREATE controller for this incremental learning stage.
+//
+// require('../controllers/todoController') returns the object exported by
+// todoController.js:
+//   { createTodo: [Function] }
+//
+// The braces use JavaScript object destructuring. They take the createTodo
+// property from that exported object and create a local constant with the
+// same name.
+const { createTodo } = require('../controllers/todoController');
+
 // Create a router object. Think of it as a mini Express app.
 const router = express.Router();
 
@@ -18,6 +29,26 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// CREATE: POST /api/todos
+//
+// server.js mounted this router at /api/todos:
+//   app.use('/api/todos', todoRoutes)
+//
+// This file adds the relative path "/":
+//   router.post('/', createTodo)
+//
+// Express combines them into:
+//   POST /api/todos
+//
+// createTodo has NO parentheses here. We are passing the function itself to
+// Express as a callback. Writing createTodo() would execute it immediately
+// while the application starts, when no req or res objects exist.
+//
+// This route answers only "which function handles this method and path?"
+// Reading the request, saving to MongoDB, and sending the response are the
+// controller's responsibility.
+router.post('/', createTodo);
 
 // PATCH /api/todos/:id
 // Toggle the completed status of a single todo.
