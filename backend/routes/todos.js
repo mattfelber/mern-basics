@@ -19,18 +19,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST /api/todos
-// Create a new todo. The frontend sends { text: "..." } in the request body.
-router.post('/', async (req, res) => {
-  try {
-    const newTodo = new Todo({ text: req.body.text });
-    const savedTodo = await newTodo.save();
-    res.status(201).json(savedTodo);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
 // PATCH /api/todos/:id
 // Toggle the completed status of a single todo.
 // :id is a URL parameter that Mongoose uses to find the document.
